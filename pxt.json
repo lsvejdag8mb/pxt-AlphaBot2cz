@@ -1,0 +1,18 @@
+{
+    "name": "AlphaBot2cz",
+    "version": "0.0.1",
+    "description": "Rozšíření pro Waveshare AlphaBot2",
+    "license": "MIT",
+    "dependencies": {
+        "core": "*"
+    },
+    "files": [
+        "README.md",
+        "AlphaBot2cz.ts",
+        "_locales/zh/AlphaBot2-strings.json"
+    ],
+    "testFiles": [
+        "test.ts"
+    ],
+    "public": true
+}
