@@ -125,70 +125,70 @@ namespace AlphaBot2 {
         buf[4] = (off >> 8) & 0xff;
         pins.i2cWriteBuffer(PCA9685_ADDRESS, buf);
     }
-    //% blockId=AlphaBot2_motor_run block="Motor|%index|rychlost %speed"
-    //% speed eg: 150
+    //% blockId=AlphaBot2_motor_run block="Motor|%index|rychlost %rychlost"
+    //% rychlost eg: 150
     //% weight=100
-    //% speed.min=-255 speed.max=255
+    //% rychlost.min=-255 rychlost.max=255
     //% name.fieldEditor="gridpicker" name.fieldOptions.columns=4
-    export function MotorRun(index: Motors, speed: number): void {
+    export function MotorRun(index: Motors, rychlost: number): void {
         if (!initialized) {
             initPCA9685()
         }
-        speed = speed * 16; // map 255 to 4096
-        if (speed >= 4096) {
-            speed = 4095
+        rychlost = rychlost * 16; // map 255 to 4096
+        if (rychlost >= 4096) {
+            rychlost = 4095
         }
-        if (speed <= -4096) {
-            speed = -4095
+        if (rychlost <= -4096) {
+            rychlost = -4095
         }
         if (index == 1) {
-            if (speed >= 0) {
+            if (rychlost >= 0) {
                 setPwm(2, 0, 4095)
                 setPwm(3, 0, 0)
-                setPwm(1, 0, speed)
+                setPwm(1, 0, rychlost)
             } else {
                 setPwm(2, 0, 0)
                 setPwm(3, 0, 4095)
-                setPwm(1, 0, -speed)
+                setPwm(1, 0, -rychlost)
             }
         } else if (index == 2) {
-            if (speed >= 0) {
+            if (rychlost >= 0) {
                 setPwm(5, 0, 4095)
                 setPwm(4, 0, 0)
-                setPwm(6, 0, speed)
+                setPwm(6, 0, rychlost)
             } else {
                 setPwm(5, 0, 0)
                 setPwm(4, 0, 4095)
-                setPwm(6, 0, -speed)
+                setPwm(6, 0, -rychlost)
             }
         }
     }
 	/**
 	 * Execute single motors
-	 * @param speed [-255-255] speed of motor; eg: 150
+	 * @param rychlost [-255-255] rychlost of motor; eg: 150
 	*/
-    //% blockId=AlphaBot2_run block="|%index|rychlostí %speed"
-    //% speed eg: 150
+    //% blockId=AlphaBot2_run block="|%index|rychlostí %rychlost"
+    //% rychlost eg: 150
     //% weight=95
-    //% speed.min=-255 speed.max=255 eg: 150
+    //% rychlost.min=-255 rychlost.max=255 eg: 150
     //% name.fieldEditor="gridpicker" name.fieldOptions.columns=4
-    export function Run(index: Dir, speed: number): void {
+    export function Run(index: Dir, rychlost: number): void {
         switch (index) {
             case Dir.forward:
-                MotorRun(Motors.M1, speed);
-                MotorRun(Motors.M2, speed);
+                MotorRun(Motors.M1, rychlost);
+                MotorRun(Motors.M2, rychlost);
                 break;
             case Dir.backward:
-                MotorRun(Motors.M1, -speed);
-                MotorRun(Motors.M2, -speed);
+                MotorRun(Motors.M1, -rychlost);
+                MotorRun(Motors.M2, -rychlost);
                 break;
             case Dir.turnRight:
-                MotorRun(Motors.M1, speed);
-                MotorRun(Motors.M2, -speed);
+                MotorRun(Motors.M1, rychlost);
+                MotorRun(Motors.M2, -rychlost);
                 break;
             case Dir.turnLeft:
-                MotorRun(Motors.M1, -speed);
-                MotorRun(Motors.M2, speed);
+                MotorRun(Motors.M1, -rychlost);
+                MotorRun(Motors.M2, rychlost);
                 break;
             case Dir.stop:
                 MotorRun(Motors.M1, 0);
@@ -199,16 +199,16 @@ namespace AlphaBot2 {
 
 	/**
 	 * Execute single motors
-	 * @param speed [-255-255] speed of motor; eg: 150
+	 * @param rychlost [-255-255] rychlost of motor; eg: 150
 	 * @param time dalay second time; eg: 2
 	*/
-    //% blockId=AlphaBot2_run_delay block="|%index|rychlostí %speed|po dobu %time|s"
-    //% speed eg: 150
+    //% blockId=AlphaBot2_run_delay block="|%index|rychlostí %rychlost|po dobu %time|s"
+    //% rychlost eg: 150
     //% weight=90
-    //% speed.min=-255 speed.max=255 eg: 150
-    //% name.fieldEditor="gridpicker" name.fieldOptions.columns=4 name.fieldOptions.title="rychlost"
-    export function RunDelay(index: Dir, speed: number, time: number): void {
-        Run(index, speed);
+    //% rychlost.min=-255 rychlost.max=255 eg: 150
+    //% name.fieldEditor="gridpicker" name.fieldOptions.columns=4
+    export function RunDelay(index: Dir, rychlost: number, time: number): void {
+        Run(index, rychlost);
         basic.pause(time * 1000);
         Run(Dir.stop, 0);
     }
