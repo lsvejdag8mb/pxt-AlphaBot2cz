@@ -206,7 +206,7 @@ namespace AlphaBot2 {
     //% speed eg: 150
     //% weight=90
     //% speed.min=-255 speed.max=255 eg: 150
-    //% name.fieldEditor="gridpicker" name.fieldOptions.columns=4
+    //% name.fieldEditor="gridpicker" name.fieldOptions.columns=4 name.fieldOptions.title="rychlost"
     export function RunDelay(index: Dir, speed: number, time: number): void {
         Run(index, speed);
         basic.pause(time * 1000);
